@@ -4,14 +4,14 @@
 line-length = 79
 exclude = [
     "./project/",
-    "./*/migrations/",
+    "./**/migrations/",
     "./manage.py",
     "./venv/"
 ]
 
 # Blue
 [tool.blue]
-extend-exclude = '(./project/ ./venv)'
+extend-exclude = '(./venv|./*/migrations)'
 
 # isort
 [tool.isort]
@@ -20,14 +20,10 @@ line_length = 79
 known_third_party = ["django"]
 skip = [
     "./project",
-    "./*/migrations/",
+    "./*/migrations",
     "./manage.py",
-    "./venv/"
+    "./venv"
 ]
-
-[tool.pytest.ini_options]
-pythonpath = "."
-
 
 # Tasks
 [tool.taskipy.tasks]
