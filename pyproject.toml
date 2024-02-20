@@ -1,0 +1,42 @@
+# Ruff
+[tool.ruff]
+
+line-length = 79
+exclude = [
+    "./project/",
+    "./*/migrations/",
+    "./manage.py",
+    "./venv/"
+]
+
+# Blue
+[tool.blue]
+extend-exclude = '(./project/ ./venv)'
+
+# isort
+[tool.isort]
+profile = "black"
+line_length = 79
+known_third_party = ["django"]
+skip = [
+    "./project",
+    "./*/migrations/",
+    "./manage.py",
+    "./venv/"
+]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+
+
+# Tasks
+[tool.taskipy.tasks]
+
+lint = 'ruff ./ && blue ./ --check --diff'
+lint_fix = 'ruff ./ --fix && blue ./ --check --diff'
+format = 'blue ./ && isort ./'
+check_strict = 'mypy ./ --strict --exclude ./manage./py'
+check = 'mypy ./'
+pre_test = 'task lint && task check'
+test = 'pytest ./'
+post_test = 'task format && coverage html'

@@ -1,0 +1,8 @@
+blue==0.9.1
+Django==5.0.2
+flake8==4.0.1
+isort==5.13.2
+mypy==1.7.1
+pylint==3.0.3
+ruff==0.2.2
+taskipy==1.12.2
