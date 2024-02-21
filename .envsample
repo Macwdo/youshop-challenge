@@ -1,0 +1,9 @@
+SECRET_KEY=some_secret_key
+DEBUG=1
+ALLOWED_HOSTS=*,localhost
+
+DB_HOST=db
+DB_PORT=5432
+DB_DATABASE=postgres
+DB_USER=postgres
+DB_PASSWORD=postgres
