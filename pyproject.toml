@@ -1,14 +1,3 @@
-# Ruff
-[tool.ruff]
-
-line-length = 79
-exclude = [
-    "./project/",
-    "./**/migrations/",
-    "./manage.py",
-    "./venv/"
-]
-
 # Blue
 [tool.blue]
 extend-exclude = '(./venv|./*/migrations)'
@@ -19,20 +8,20 @@ profile = "black"
 line_length = 79
 known_third_party = ["django"]
 skip = [
-    "./project",
-    "./*/migrations",
-    "./manage.py",
-    "./venv"
+    "./src/project",
+    "./src/*/migrations",
+    "./src/manage.py"
 ]
 
 # Tasks
 [tool.taskipy.tasks]
 
-lint = 'ruff ./ && blue ./ --check --diff'
-lint_fix = 'ruff ./ --fix && blue ./ --check --diff'
-format = 'blue ./ && isort ./'
-check_strict = 'mypy ./ --strict --exclude ./manage./py'
-check = 'mypy ./'
+lint = 'blue ./src --check --diff'
+format = 'blue ./src && isort ./src'
+
+check = 'mypy ./src'
+check_strict = 'mypy ./src --strict --exclude manage.py'
+
 pre_test = 'task lint && task check'
-test = 'pytest ./'
+test = 'coverage run -m pytest ./src'
 post_test = 'task format && coverage html'
