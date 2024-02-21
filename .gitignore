@@ -5,6 +5,9 @@ venv/
 .AppleDouble
 .LSOverride
 
+# Jetbrains
+.idea/
+
 # Icon must end with two \r
 Icon
 

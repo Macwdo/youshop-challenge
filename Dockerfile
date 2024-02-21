@@ -1,6 +1,6 @@
 FROM python:3.11.1
 
-WORKDIR /app
+WORKDIR /home/app
 
 EXPOSE 8000
 # python doesn't allow to write .pyc files
@@ -14,11 +14,11 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip wheel
 
-COPY ./requirements.txt /app/requirements.txt
+COPY requirements.txt /home/app/requirements.txt
 RUN pip install -r requirements.txt
 
-COPY ./commands.sh /app/commands.sh
+COPY commands.sh /home/app/commands.sh
 
-COPY ./src /app
+COPY src /home/app
 
-CMD ["/app/commands.sh"]
+CMD ["/home/app/commands.sh"]

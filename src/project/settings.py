@@ -31,8 +31,6 @@ ALLOWED_HOSTS = [
     if host.strip()
   
 ]
-
-
 # Application definition
 
 INSTALLED_APPS = [
