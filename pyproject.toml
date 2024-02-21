@@ -1,6 +1,6 @@
 # Blue
 [tool.blue]
-extend-exclude = '(./venv|./*/migrations)'
+extend-exclude = '(./venv|./*/migrations|./project)'
 
 # isort
 [tool.isort]
