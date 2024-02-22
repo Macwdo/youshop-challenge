@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} Registrar nova Árvore {% endblock %}
+{% block page_description %}Insira os dados do novo registro{% endblock %}
+{% block content %}
+<form action="{% url 'new_planted_tree_create' %}" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button class="btn btn-success mt-4" type="submit">Registrar nova Àrvore</button>
+</form>
+{% endblock %}

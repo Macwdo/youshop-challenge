@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} Home page {% endblock %}
+{% block page_description %}
+
+{% if account_planted_trees %}
+    Essas são as árvores plantadas da sua conta
+{% else %}
+    Essas são as árvores plantadas do seu úsuario
+{% endif %}
+ 
+{% endblock %}
+{% block content %}
+<div>
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <h3 class="card-title ">
+                        Árvores plantadas | {% if account_planted_trees %} Conta {% else %} Usuário {% endif %}
+                    </h3>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-success" href="{% url "new_planted_tree" %}">
+                        Registrar árvore plantada
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Plantado em</th>
+                        <th>Visualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for planted_tree in planted_trees %}
+                    <tr>
+                        <td>{{ planted_tree.id }}</td>
+                        <td>{{ planted_tree.tree.name }}</td>
+                        <td>{{ planted_tree.planted_at }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{% url "planted_tree" planted_tree.id %}">
+                                Visualizar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

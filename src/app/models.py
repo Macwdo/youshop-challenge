@@ -6,9 +6,9 @@ from pydantic import BaseModel
 
 
 class Plant(BaseModel):
-    tree: "Tree"
-    location: "Coordinate"
-    
+    tree: 'Tree'
+    location: 'Coordinate'
+
 
 class Coordinate(BaseModel):
     latitude: float
@@ -20,7 +20,9 @@ class Tree(models.Model):
 
     name = models.CharField(max_length=100)
     scientific_name = models.CharField(max_length=100)
-    ...
+
+    def __str__(self) -> str:
+        return f'{self.name} - {self.scientific_name}'
 
 
 class Account(models.Model):
@@ -40,14 +42,25 @@ class AccountUser(models.Model):
     def __str__(self) -> str:
         return f'{self.account} - {self.user}'
 
+
 class User(AbstractUser):
-    def plant_tree(self, tree: Tree, location: "Coordinate") -> None:
-        ...
+    def plant_tree(self, tree: Tree, location: 'Coordinate') -> PlantedTree:
+        planted_tree = PlantedTree.objects.create(
+            tree=tree,
+            latitude=location.latitude,
+            longitude=location.longitude,
+            user=self,
+        )
+        planted_tree.save()
+        return planted_tree
 
-    def plant_trees(self, plants: list["Plant"]) -> None:
-        ...
+    def plant_trees(self, plants: list['Plant']) -> None:
+        for plant in plants:
+            self.plant_tree(plant.tree, plant.location)
 
-    profile = models.ForeignKey('Profile', on_delete=models.CASCADE, null=True, blank=True)
+    profile = models.ForeignKey(
+        'Profile', on_delete=models.CASCADE, null=True, blank=True
+    )
 
     def __str__(self) -> str:
         return f'{self.username}'
@@ -58,22 +71,23 @@ class Profile(models.Model):
     joined = models.DateTimeField(auto_now_add=True)
 
 
-
 class PlantedTree(models.Model):
 
     latitude = models.FloatField()
     longitude = models.FloatField()
 
-    age = models.IntegerField()
+    age = models.IntegerField(default=0, blank=True)
     planted_at = models.DateTimeField(auto_now_add=True)
 
     tree = models.ForeignKey('Tree', on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
-    account = models.ForeignKey('Account', on_delete=models.SET_NULL, null=True)
+    account = models.ForeignKey(
+        'Account', on_delete=models.SET_NULL, null=True
+    )
 
     def __str__(self) -> str:
         return f'{self.tree} at {self.latitude}, {self.longitude}'
 
     @property
     def location(self) -> Coordinate:
-        return self.latitude, self.longitude
+        return Coordinate(latitude=self.latitude, longitude=self.longitude)

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %} Árvore {{ planted_tree.id}}{% endblock %}
+{% block page_description %}Aqui está o registro da sua árvore{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="card m-2">
+        <div class="card-header">
+            ID do plantio: {{planted_tree.id}}
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                Usuario: {{planted_tree.user.username}}
+            </li>
+            <li class="list-group-item">
+                Conta: {{planted_tree.account.name}}
+            </li>
+
+        </ul>
+    </div>
+    <div class="card m-2">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                Id: {{planted_tree.id}}
+            </li>
+            <li class="list-group-item">
+                Idade: {{planted_tree.age}}
+            </li>
+            <li class="list-group-item">
+                Plantado em: {{planted_tree.planted_at}}
+            </li>
+        </ul>
+    </div>
+    <div class="card m-2">
+        <div class="card-header">
+            Àrvore: 
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                Id: {{planted_tree.id}}
+            </li>
+            <li class="list-group-item">
+                Nome: {{planted_tree.tree.name}}
+            </li>
+            <li class="list-group-item">
+                Nome Científico: {{planted_tree.tree.scientific_name}}
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

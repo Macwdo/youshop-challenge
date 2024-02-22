@@ -10,7 +10,7 @@ services:
       - ./src/:/home/app
     env_file:
       - .env
-
+    
     depends_on:
       - db
   

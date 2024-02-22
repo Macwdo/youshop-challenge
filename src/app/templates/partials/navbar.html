@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" aria-current="page" href="{% url 'planted_trees' %}">
+            Árvores do Usuário
+        </a>
+        <a class="nav-item nav-link active" aria-current="page" href="{% url 'account_planted_trees' %}">
+            Árvores da Conta
+        </a>
+      </div>
+    </div>
+    {% if not user.is_anonymous %}
+    <a class="btn btn-light" href="{% url "logout" %}">Logout</a>
+{% endif %}
+</nav>

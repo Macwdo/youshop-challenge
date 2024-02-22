@@ -9,7 +9,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 RUN apt-get clean && apt-get update
 RUN apt-get install -y gcc python3-dev python-dev build-essential musl-dev wkhtmltopdf
 
-# python doesn't buffer stdout and stderr
 ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip wheel
