@@ -1,3 +1,4 @@
+from django.db.models import BaseManager
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
@@ -10,6 +11,6 @@ class PlantedTreesViewSet(ListAPIView):
     queryset = PlantedTree.objects.all()
     permission_classes = [IsAuthenticated]
 
-    # type: ignore
-    def get_queryset(self) -> list[PlantedTree]:
-        return PlantedTree.objects.filter(user=self.request.user)
+    def get_queryset(self) -> BaseManager[PlantedTree]:
+        query_set = PlantedTree.objects.filter(user=self.request.user)
+        return query_set

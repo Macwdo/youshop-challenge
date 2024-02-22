@@ -2,7 +2,12 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
-from django.http import HttpRequest
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+    HttpResponseForbidden,
+    HttpResponseRedirect,
+)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
@@ -18,7 +23,7 @@ def handler403(request, exception):
 
 
 @require_http_methods(['GET', 'POST'])
-def login(request: HttpRequest):
+def login(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.user.is_authenticated:
         return redirect(reverse('planted_trees'))
 
@@ -45,13 +50,13 @@ def login(request: HttpRequest):
 
 
 @login_required()
-def logout(request: HttpRequest):
+def logout(request: HttpRequest) -> HttpResponseRedirect:
     auth.logout(request)
     return redirect(reverse('login'))
 
 
 @login_required()
-def planted_trees(request: HttpRequest):
+def planted_trees(request: HttpRequest) -> HttpResponse:
     planted_trees = PlantedTree.objects.filter(user=request.user)
     context = {'planted_trees': planted_trees}
     return render(request, 'planted_trees.html', context=context)
@@ -59,7 +64,7 @@ def planted_trees(request: HttpRequest):
 
 @require_http_methods(['GET'])
 @login_required()
-def account_planted_trees(request: HttpRequest):
+def account_planted_trees(request: HttpRequest) -> HttpResponse:
     user_accounts = AccountUser.objects.filter(user=request.user)
     accounts_ids = user_accounts.values_list('account_id', flat=True)
     planted_trees = PlantedTree.objects.filter(
@@ -72,10 +77,14 @@ def account_planted_trees(request: HttpRequest):
 
 @require_http_methods(['GET'])
 @login_required()
-def planted_tree_detail(request: HttpRequest, tree_id: int):
+def planted_tree_detail(
+    request: HttpRequest, tree_id: int
+) -> HttpResponse | HttpResponseForbidden:
     planted_tree = PlantedTree.objects.get(id=tree_id)
     if planted_tree.user != request.user:
-        raise PermissionDenied('deu merda')
+        raise PermissionDenied(
+            'Você não pode ver á árvore plantada por outro usuario'
+        )
 
     context = {'planted_tree': planted_tree}
     return render(request, 'planted_tree_detail.html', context)
@@ -83,7 +92,7 @@ def planted_tree_detail(request: HttpRequest, tree_id: int):
 
 @require_http_methods(['GET'])
 @login_required()
-def new_planted_tree_page(request: HttpRequest):
+def new_planted_tree_page(request: HttpRequest) -> HttpResponse:
     form = PlantedTreesForm()
     context = {'form': form}
     return render(request, 'new_planted_tree.html', context)
@@ -91,7 +100,7 @@ def new_planted_tree_page(request: HttpRequest):
 
 @require_http_methods(['POST'])
 @login_required()
-def new_planted_tree(request: HttpRequest):
+def new_planted_tree(request: HttpRequest) -> HttpResponseRedirect:
     form = PlantedTreesForm(request.POST)
     if form.is_valid():
         location = Coordinate(

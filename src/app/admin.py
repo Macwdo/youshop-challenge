@@ -28,17 +28,20 @@ class PlantedTreeAdmin(admin.ModelAdmin):
 
     list_filter = ('tree__name', 'tree__scientific_name')
 
-    def tree_name(self, obj):
-        return obj.tree.name
+    def tree_name(self, obj: PlantedTree) -> str:
+        name: str = obj.tree.name
+        return name
 
-    def tree_scientific_name(self, obj):
-        return obj.tree.scientific_name
+    def tree_scientific_name(self, obj: PlantedTree) -> str:
+        scientific_name: str = obj.tree.scientific_name
+        return scientific_name
 
-    def user_name(self, obj):
-        return obj.user.username
+    def username(self, obj: PlantedTree) -> str:
+        username: str = obj.user.username
+        return username
 
     # I couldn't understand the task 1.3. I think it was asked to add some filter.
-    list_display = ('tree_name', 'tree_scientific_name', 'user_name')
+    list_display = ('tree_name', 'tree_scientific_name', 'username')
 
 
 @admin.register(Tree)
