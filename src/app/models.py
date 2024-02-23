@@ -4,7 +4,6 @@ from dataclasses import dataclass
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from pydantic import BaseModel
 
 
 @dataclass

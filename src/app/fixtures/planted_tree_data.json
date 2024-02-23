@@ -1,0 +1,67 @@
+[
+    {
+        "model": "app.plantedtree",
+        "pk": 1,
+        "fields": {
+            "latitude": 37.7749,
+            "longitude": 122.4194,
+            "age": 5,
+            "planted_at": "2024-02-01T00:00:00-05:00",
+            "tree": 1,
+            "user": 1,
+            "account": 1
+        }
+    },
+    {
+        "model": "app.plantedtree",
+        "pk": 2,
+        "fields": {
+            "latitude": 37.7749,
+            "longitude": 122.4194,
+            "age": 5,
+            "planted_at": "2024-02-01T00:00:00-05:00",
+            "tree": 1,
+            "user": 1,
+            "account": 1
+        }
+    },
+    {
+        "model": "app.plantedtree",
+        "pk": 3,
+        "fields": {
+            "latitude": 37.7749,
+            "longitude": 122.4194,
+            "age": 5,
+            "planted_at": "2024-02-01T00:00:00-05:00",
+            "tree": 1,
+            "user": 1,
+            "account": 1
+        }
+    },
+    {
+        "model": "app.plantedtree",
+        "pk": 4,
+        "fields": {
+            "latitude": 37.7749,
+            "longitude": 122.4194,
+            "age": 5,
+            "planted_at": "2024-02-01T00:00:00-05:00",
+            "tree": 1,
+            "user": 1,
+            "account": 1
+        }
+    },
+    {
+        "model": "app.plantedtree",
+        "pk": 5,
+        "fields": {
+            "latitude": 37.7749,
+            "longitude": 122.4194,
+            "age": 5,
+            "planted_at": "2024-02-01T00:00:00-05:00",
+            "tree": 1,
+            "user": 1,
+            "account": 1
+        }
+    }
+]

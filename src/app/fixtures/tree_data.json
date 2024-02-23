@@ -1,0 +1,42 @@
+[
+    {
+        "model": "app.tree",
+        "pk": 1,
+        "fields": {
+            "name": "Tree 1",
+            "scientific_name": "Quercus robur"
+        }
+    },
+    {
+        "model": "app.tree",
+        "pk": 2,
+        "fields": {
+            "name": "Tree 2",
+            "scientific_name": "Quercus petraea"
+        }
+    },
+    {
+        "model": "app.tree",
+        "pk": 3,
+        "fields": {
+            "name": "Tree 3",
+            "scientific_name": "Quercus cerris"
+        }
+    },
+    {
+        "model": "app.tree",
+        "pk": 4,
+        "fields": {
+            "name": "Tree 4",
+            "scientific_name": "Quercus ilex"
+        }
+    },
+    {
+        "model": "app.tree",
+        "pk": 5,
+        "fields": {
+            "name": "Tree 5",
+            "scientific_name": "Quercus suber"
+        }
+    }
+]

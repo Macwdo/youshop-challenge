@@ -1,0 +1,48 @@
+[
+    {
+        "model": "app.account",
+        "pk": 1,
+        "fields": {
+            "name": "Account 1",
+            "active": true,
+            "created_at": "2013-11-01T00:00:00-05:00"
+        }
+    },
+    {
+        "model": "app.account",
+        "pk": 2,
+        "fields": {
+            "name": "Account 2",
+            "active": true,
+            "created_at": "2013-11-01T00:00:00-05:00"
+        }
+    },
+    {
+        "model": "app.account",
+        "pk": 3,
+        "fields": {
+            "name": "Account 3",
+            "active": true,
+            "created_at": "2013-11-01T00:00:00-05:00"
+        }
+    },
+    {
+        "model": "app.account",
+        "pk": 4,
+        "fields": {
+            "name": "Account 4",
+            "active": true,
+            "created_at": "2013-11-01T00:00:00-05:00"
+        }
+    },
+    {
+        "model": "app.account",
+        "pk": 5,
+        "fields": {
+            "name": "Account 5",
+            "active": true,
+            "created_at": "2013-11-01T00:00:00-05:00"
+        }
+    }
+
+]

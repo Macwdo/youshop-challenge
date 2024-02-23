@@ -24,3 +24,7 @@ admin:
 tests:
 	@echo Running tests 🧪
 	docker exec -it youshop_djangoapp python manage.py test
+
+load_data:
+	@echo Loading data 📦
+	docker exec -i youshop_djangoapp sh -c 'python manage.py loaddata */fixtures/*.json'
