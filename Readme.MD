@@ -66,7 +66,6 @@ docker exec -it youshop_djangoapp python manage.py test
 # Algumas informações uteis
 
 Endpoints da API
-- http://localhost:8000/api/token/ | Autenticar na API com usuario e senha. (djangorestframework-simplejwt)
 
 - http://localhost:8000/api/token/ | Autenticar na API com usuario e senha. (djangorestframework-simplejwt)
 
