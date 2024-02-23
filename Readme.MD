@@ -76,5 +76,7 @@ Endpoints da API
 
 - Não houve grande separações de pastas e arquivos, pois a aplicação é pequena e não achei necessário a separação.
 - Algumas informações sobre o desafio na parte da modelagem de dados ficaram um pouco confusas, mas acredito que a solução que foi feita atende as necessidades.
+- Ferramentas como flake8, isort, blue e mypy foram usadas para manter o código limpo e organizado.
+- Configurações sobre ferramentas de desenvolvimento estão no arquivo pyproject.toml
 
 

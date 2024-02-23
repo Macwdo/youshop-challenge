@@ -108,15 +108,9 @@ class PlantedTreeTests(TestCase, FixturesMixin):
 
         self.__user_test_password = 'Testpassword123#'
 
-        self.create_account_user(
-            account=self.__account_1, user=self.__user_1
-        )
-        self.create_account_user(
-            account=self.__account_1, user=self.__user_2
-        )
-        self.create_account_user(
-            account=self.__account_2, user=self.__user_3
-        )
+        self.create_account_user(account=self.__account_1, user=self.__user_1)
+        self.create_account_user(account=self.__account_1, user=self.__user_2)
+        self.create_account_user(account=self.__account_2, user=self.__user_3)
 
         self.__tree_1 = self.create_tree()
 
