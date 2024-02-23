@@ -108,13 +108,13 @@ class PlantedTreeTests(TestCase, FixturesMixin):
 
         self.__user_test_password = 'Testpassword123#'
 
-        self.__account1_user_1 = self.create_account_user(
+        self.create_account_user(
             account=self.__account_1, user=self.__user_1
         )
-        self.__account1_user_2 = self.create_account_user(
+        self.create_account_user(
             account=self.__account_1, user=self.__user_2
         )
-        self.__account2_user_3 = self.create_account_user(
+        self.create_account_user(
             account=self.__account_2, user=self.__user_3
         )
 
@@ -172,7 +172,7 @@ class PlantedTreeTests(TestCase, FixturesMixin):
         self.assertTemplateUsed(response, 'forbidden.html')
         self.assertEqual(response.status_code, 403)
 
-    def test_if_user_account_planted_trees_is_rendering(self):
+    def test_if_account_planted_trees_is_rendering(self):
         user_1 = self.__user_1
         user_2 = self.__user_2
         account_1 = self.__account_1
@@ -220,7 +220,6 @@ class UserPlantTreeTests(UnitTestCase, FixturesMixin):
 
     def __load_fixtures(self):
         self.__user = self.create_user()
-        ...
 
     def test_user_plant_tree_method(self):
         user = self.__user
@@ -245,12 +244,16 @@ class UserPlantTreeTests(UnitTestCase, FixturesMixin):
 
         planted_trees_ids = [planted_tree.id for planted_tree in planted_trees]
 
-        query_planted_trees_ids = PlantedTree.objects.filter(
+        query_planted_trees = PlantedTree.objects.filter(
             id__in=planted_trees_ids
-        ).values_list('id', flat=True)
+        )
+        query_planted_trees_ids = query_planted_trees.values_list(
+            'id', flat=True
+        )
+        planted_trees_from_user = query_planted_trees.filter(user=user)
 
         self.assertEqual(query_planted_trees_ids.count(), 3)
-        self.assertSequenceEqual(planted_trees_ids, query_planted_trees_ids)
+        self.assertEqual(planted_trees_from_user.count(), len(planted_trees))
 
     def tearDown(self) -> None:
         return super().tearDown()
