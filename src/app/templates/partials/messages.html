@@ -1,0 +1,25 @@
+{% if messages %}
+    {% for msg in messages %}
+        {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-message alert-danger" role="alert" style="margin-left: 12px; margin-right: 16px;">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                {{msg|safe}}
+            </div>
+        {% elif msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-message alert-success" role="alert" style="margin-left: 12px; margin-right: 16px;">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                {{msg|safe}}
+            </div>
+        {% elif msg.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+            <div class="alert alert-message alert-info" role="alert" style="margin-left: 12px; margin-right: 16px;">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                {{msg|safe}}
+            </div>
+        {% elif msg.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <div class="alert alert-message alert-warning" role="alert" style="margin-left: 12px; margin-right: 16px;">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                {{msg|safe}}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}

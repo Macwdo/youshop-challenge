@@ -4,6 +4,7 @@ from app.api.viewsets import PlantedTreesViewSet
 from app.views import (
     account_planted_trees,
     login,
+    login_auth,
     logout,
     new_planted_tree,
     new_planted_tree_page,
@@ -12,13 +13,9 @@ from app.views import (
 )
 
 urlpatterns = [
-    path(
-        'api/my-planted-trees/',
-        PlantedTreesViewSet.as_view(),
-        name='my-planted-trees',
-    ),
+    path('', planted_trees, name='planted_trees'),
     path('login/', login, name='login'),
-    path('planted-trees', planted_trees, name='planted_trees'),
+    path('login/auth/', login_auth, name='auth'),
     path(
         'account-planted-trees',
         account_planted_trees,
@@ -33,5 +30,10 @@ urlpatterns = [
         'new-planted-tree/create/',
         new_planted_tree,
         name='new_planted_tree_create',
+    ),
+    path(
+        'api/my-planted-trees/',
+        PlantedTreesViewSet.as_view(),
+        name='my-planted-trees',
     ),
 ]

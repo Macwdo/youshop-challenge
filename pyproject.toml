@@ -13,15 +13,19 @@ skip = [
     "./src/manage.py"
 ]
 
+[tool.mypy]
+ignore_missing_imports = true
+exclude = ['migrations', 'tests']
+
 # Tasks
 [tool.taskipy.tasks]
 
 lint = 'blue ./src --check --diff'
 format = 'blue ./src && isort ./src'
 
-check = 'mypy ./src'
-check_strict = 'mypy ./src --strict --exclude manage.py'
+check = 'mypy --config-file pyproject.toml ./src'
+check_strict = 'mypy --config-file pyproject.toml ./src --strict '
 
 pre_test = 'task lint && task check'
-test = 'coverage run -m pytest ./src'
-post_test = 'task format && coverage html'
+test = 'make tests'
+post_test = 'task format'

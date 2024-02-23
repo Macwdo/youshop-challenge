@@ -10,6 +10,6 @@
       </div>
     </div>
     {% if not user.is_anonymous %}
-    <a class="btn btn-light" href="{% url "logout" %}">Logout</a>
-{% endif %}
+      <a class="btn btn-light m-2" href="{% url "logout" %}">Logout</a>
+    {% endif %}
 </nav>

@@ -3,7 +3,7 @@
 {% block page_title %} Olá seja bem vindo{% endblock %}
 {% block page_description %} Insira suas credenciais para se autenticar {% endblock %}
 {% block content %}
-<form action="{% url 'login' %}" method="POST">
+<form action="{% url 'auth' %}" method="POST">
     {% csrf_token %}
     {{form}}
     <button class="btn btn-success mt-4" type="submit">Login</button>

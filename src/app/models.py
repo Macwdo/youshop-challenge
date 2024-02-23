@@ -1,21 +1,24 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from pydantic import BaseModel
 
 
-class Plant(BaseModel):
-    tree: 'Tree'
-    location: 'Coordinate'
+@dataclass
+class Plant:
+    tree: Tree
+    location: Coordinate
 
 
-class Coordinate(BaseModel):
+@dataclass
+class Coordinate:
     latitude: float
     longitude: float
 
 
-# Create your models here.
 class Tree(models.Model):
 
     name = models.CharField(max_length=100)
@@ -44,19 +47,19 @@ class AccountUser(models.Model):
 
 
 class User(AbstractUser):
-    def plant_tree(self, tree: Tree, location: 'Coordinate') -> PlantedTree:
+    def plant_tree(self, tree: Tree, location: Coordinate) -> PlantedTree:
         planted_tree = PlantedTree.objects.create(
             tree=tree,
             latitude=location.latitude,
             longitude=location.longitude,
             user=self,
         )
-        planted_tree.save()
         return planted_tree
 
-    def plant_trees(self, plants: list['Plant']) -> None:
-        for plant in plants:
-            self.plant_tree(plant.tree, plant.location)
+    def plant_trees(self, plants: list[Plant]) -> list[PlantedTree]:
+        return [
+            self.plant_tree(plant.tree, plant.location) for plant in plants
+        ]
 
     profile = models.ForeignKey(
         'Profile', on_delete=models.CASCADE, null=True, blank=True

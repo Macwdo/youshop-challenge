@@ -8,12 +8,12 @@ from django.http import (
     HttpResponseForbidden,
     HttpResponseRedirect,
 )
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from app.forms import LoginForm, PlantedTreesForm
-from app.models import AccountUser, Coordinate, PlantedTree
+from app.models import AccountUser, Coordinate, PlantedTree, User
 
 
 def handler403(request, exception):
@@ -22,36 +22,44 @@ def handler403(request, exception):
     )
 
 
-@require_http_methods(['GET', 'POST'])
+def handler404(request, exception):
+    return render(
+        request, 'not_found.html', status=404, context={'exception': exception}
+    )
+
+
+@require_http_methods(['GET'])
 def login(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.user.is_authenticated:
         return redirect(reverse('planted_trees'))
 
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = auth.authenticate(username=username, password=password)
-            if user is not None:
-                auth.login(request, user)
-                return redirect(reverse('planted_trees'))
-            else:
-                form.add_error('username', 'Invalid username or password')
-        else:
-            messages.add_message(
-                request, messages.ERROR, 'Invalid username or password'
-            )
-    else:
-        form = LoginForm()
-
+    form = LoginForm()
     context = {'form': form}
     return render(request, 'login.html', context=context)
+
+
+@require_http_methods(['POST'])
+def login_auth(request: HttpRequest) -> HttpResponseRedirect:
+    form = LoginForm(request.POST)
+    if form.is_valid():
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'Login efetuado com sucesso')
+        else:
+            messages.error(request, 'Nome ou senha invalida')
+    else:
+        messages.error(request, 'Dados inválidos')
+
+    return redirect(reverse('planted_trees'))
 
 
 @login_required()
 def logout(request: HttpRequest) -> HttpResponseRedirect:
     auth.logout(request)
+    messages.success(request, 'Logout efetuado com sucesso')
     return redirect(reverse('login'))
 
 
@@ -80,10 +88,10 @@ def account_planted_trees(request: HttpRequest) -> HttpResponse:
 def planted_tree_detail(
     request: HttpRequest, tree_id: int
 ) -> HttpResponse | HttpResponseForbidden:
-    planted_tree = PlantedTree.objects.get(id=tree_id)
+    planted_tree = get_object_or_404(PlantedTree, pk=tree_id)
     if planted_tree.user != request.user:
         raise PermissionDenied(
-            'Você não pode ver á árvore plantada por outro usuario'
+            'Você não pode ver á árvore plantada por outro usuário'
         )
 
     context = {'planted_tree': planted_tree}
@@ -102,12 +110,13 @@ def new_planted_tree_page(request: HttpRequest) -> HttpResponse:
 @login_required()
 def new_planted_tree(request: HttpRequest) -> HttpResponseRedirect:
     form = PlantedTreesForm(request.POST)
+    request_user: User = request.user
     if form.is_valid():
         location = Coordinate(
             latitude=form.cleaned_data['latitude'],
             longitude=form.cleaned_data['longitude'],
         )
-        planted_tree: PlantedTree = request.user.plant_tree(
+        planted_tree: PlantedTree = request_user.plant_tree(
             form.cleaned_data['tree'], location
         )
         planted_tree.age = form.cleaned_data['age']
